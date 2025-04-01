@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade" element="baohoneypotar">
+    <namespace path="src">Joomla\Plugin\System\Baohoneypotar</namespace>
+    <name>PLG_SYSTEM_BAOHONEYPOTAR</name>
+    <element>baohoneypotar</element>
+    <type>plugin</type>
+    <group>system</group>
+    <version>1.0.0</version>
+	<author>Andreas Rottmann</author>
+<license>MIT</license>
+<copyright>Copyright (C) 2024</copyright>
+    <description>
+          <![CDATA[Bot-Schutz für BAOform – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/media/plg_baohoneypotar/honeypot-token.php')
+        .then(response => response.json())
+        .then(data => {
+            const form = document.querySelector('form');
+                               console.log(data);
+            if (!form || !data.field || !data.token) return;
+
+            // Honeypot-Feld (unsichtbar)
+            const honeypot = document.createElement('input');
+            honeypot.type = 'text';
+            honeypot.name = data.field;
+            honeypot.style.position = 'absolute';
+            honeypot.style.left = '-10000px';
+            form.appendChild(honeypot);
+
+            // Token-Feld (hidden)
+            const token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = data.field + 'token';
+            token.value = data.token;
+            form.appendChild(token);
+
+            //zeit checker
+            const timeField = document.createElement('input');
+            timeField.type = 'hidden';
+            timeField.name = data.field + '_token_time';
+            timeField.value = Math.floor(Date.now() / 1000); // UNIX-Timestamp in Sekunden
+            form.appendChild(timeField);
+        });
+});
+&lt;/script&gt;</pre>]]>
+    </description>
+    <files>
+        <filename plugin="baohoneypotar">baohoneypotar.php</filename>
+        <folder>src</folder>
+	<folder plugin="baohoneypotar">services</folder>
+	<filename>index.html</filename>
+   	<filename>src/index.html</filename>
+    	<filename>services/index.html</filename>
+    </files>
+	
+	   <!-- Mediendateien (werden in /media/plg_baohoneypotar/ kopiert) -->
+    <media destination="plg_baohoneypotar" folder="media">
+        <filename>honeypot-token.php</filename>
+    	<filename>index.html</filename>
+	<filename>secret.txt</filename>
+    </media>
+	
+	 <!-- Backend-Konfiguration -->
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="secret"
+                    type="text"
+                    label="Geheimer Schlüssel"
+                    description="Wird zur Validierung des Tokens verwendet. Niemals öffentlich weitergeben." />
+		<field
+                    name="secret_praefix"
+                    type="text"
+                    label="Geheimer Präfix"
+                    description="Wird zur Erstellung des Feldes genutzt. 5-6 Zeichen" />		
+				<field name="debug" type="radio" label="Debug-Modus" default="0">
+					<option value="0">Nein</option>
+					<option value="1">Ja</option>
+				</field>
+            </fieldset>
+        </fields>
+		
+    </config>
+	
+</extension>
