@@ -10,7 +10,7 @@
 <license>MIT</license>
 <copyright>Copyright (C) 2024</copyright>
     <description>
-          <![CDATA[Bot-Schutz für BAOform – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
+          <![CDATA[Bot-Schutz für forms – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/media/plg_baohoneypotar/honeypot-token.php')
         .then(response => response.json())

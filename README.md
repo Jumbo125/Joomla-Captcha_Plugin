@@ -1,6 +1,6 @@
-# 🛡️ BAOhoneypotAR – Bot-Schutz für Joomla 4/5
+# 🛡️ BAhoneypotAR – Bot-Schutz für Joomla 4/5
 
-Ein leichtgewichtiges, datenschutzfreundliches Honeypot-Plugin für Joomla 4 und Joomla 5. Speziell entwickelt für Formulare wie **BAOforms** – schützt zuverlässig vor Bot-Spam ohne Google reCAPTCHA.
+Ein leichtgewichtiges, datenschutzfreundliches Honeypot-Plugin für Joomla 4 und Joomla 5. – schützt zuverlässig vor Bot-Spam ohne Google reCAPTCHA.
 
 ---
 
