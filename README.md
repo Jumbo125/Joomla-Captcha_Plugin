@@ -36,6 +36,30 @@ Dieses Plugin fügt unsichtbare, dynamisch generierte Felder in ein Formular ein
 
 ---
 
+---
+
+## 🛡️ Automatische Integration per JavaScript
+
+Das Plugin kann die Schutz-Felder automatisch in alle Formulare einfügen – ganz ohne manuelles Einfügen von Skriptcode.
+
+### Kontrollkästchen im Plugin:
+| Feld | Bedeutung |
+|------|-----------|
+| `Automatisch in alle Formulare einfügen` (`auto_insert`) |  
+Wenn aktiviert, wird der JavaScript-Code automatisch auf jeder Seite geladen. Er fügt den Honeypot-Schutz in alle Formulare **ein, die _nicht_ die Klasse `no-honeypot` besitzen**. |
+
+💡 Das bedeutet:
+- Kein Einfügen von HTML- oder JS-Code mehr nötig
+- Jedes Formular ist geschützt – außer, du schließt es explizit aus
+
+### 🚫 Formular vom Honeypot ausschließen
+
+Wenn du ein Formular **nicht mit dem Honeypot schützen möchtest**, gib ihm einfach die folgende CSS-Klasse:
+
+```html
+<form class="no-honeypot">
+```
+
 ### 🧩 JS-Snippet für das Formular
 
 In ein HTML-Feld innerhalb deines Formulars einfügen:
@@ -111,6 +135,24 @@ This plugin adds invisible, dynamically generated fields to a form. Bots tend to
 > ⚠️ The prefix should be 3–6 random characters, e.g., `abc123`.
 
 ---
+
+### Checkbox in the Plugin:
+| Field | Description |
+|-------|-------------|
+| `Automatically insert into all forms` (`auto_insert`) |  
+When enabled, the JavaScript code is automatically loaded on every page. It adds the honeypot protection to all forms **except those with the `no-honeypot` class**. |
+
+💡 This means:
+- No need to manually insert any HTML or JS code
+- Every form is protected – unless you explicitly exclude it
+
+### 🚫 Excluding a form from the honeypot
+
+If you want to **exclude a specific form from honeypot protection**, simply add the following CSS class to the form:
+
+```html
+<form class="no-honeypot">
+```
 
 ### 🧩 JS Snippet for Your Form
 
