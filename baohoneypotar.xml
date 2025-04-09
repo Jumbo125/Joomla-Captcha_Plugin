@@ -5,7 +5,7 @@
     <element>baohoneypotar</element>
     <type>plugin</type>
     <group>system</group>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 	<author>Andreas Rottmann</author>
 <license>MIT</license>
 <copyright>Copyright (C) 2024</copyright>
@@ -15,31 +15,34 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('/media/plg_baohoneypotar/honeypot-token.php')
         .then(response => response.json())
         .then(data => {
-            const form = document.querySelector('form');
-                               console.log(data);
-            if (!form || !data.field || !data.token) return;
+            if (!data.field || !data.token) return;
 
-            // Honeypot-Feld (unsichtbar)
-            const honeypot = document.createElement('input');
-            honeypot.type = 'text';
-            honeypot.name = data.field;
-            honeypot.style.position = 'absolute';
-            honeypot.style.left = '-10000px';
-            form.appendChild(honeypot);
+            // Alle Formulare OHNE Klasse "no-honeypot"
+            const forms = document.querySelectorAll('form:not(.no-honeypot)');
 
-            // Token-Feld (hidden)
-            const token = document.createElement('input');
-            token.type = 'hidden';
-            token.name = data.field + 'token';
-            token.value = data.token;
-            form.appendChild(token);
+            forms.forEach(form => {
+                // Honeypot-Feld (unsichtbar)
+                const honeypot = document.createElement('input');
+                honeypot.type = 'text';
+                honeypot.name = data.field;
+                honeypot.style.position = 'absolute';
+                honeypot.style.left = '-10000px';
+                form.appendChild(honeypot);
 
-            //zeit checker
-            const timeField = document.createElement('input');
-            timeField.type = 'hidden';
-            timeField.name = data.field + '_token_time';
-            timeField.value = Math.floor(Date.now() / 1000); // UNIX-Timestamp in Sekunden
-            form.appendChild(timeField);
+                // Token-Feld (hidden)
+                const token = document.createElement('input');
+                token.type = 'hidden';
+                token.name = data.field + 'token';
+                token.value = data.token;
+                form.appendChild(token);
+
+                // Zeit-Feld (hidden)
+                const timeField = document.createElement('input');
+                timeField.type = 'hidden';
+                timeField.name = data.field + '_token_time';
+                timeField.value = Math.floor(Date.now() / 1000); // UNIX-Timestamp
+                form.appendChild(timeField);
+            });
         });
 });
 &lt;/script&gt;</pre>]]>
@@ -58,29 +61,42 @@ document.addEventListener('DOMContentLoaded', function () {
         <filename>honeypot-token.php</filename>
     	<filename>index.html</filename>
 	<filename>secret.txt</filename>
+    <filename>honeypot-loader.js</filename>
     </media>
 	
 	 <!-- Backend-Konfiguration -->
-    <config>
-        <fields name="params">
-            <fieldset name="basic">
-                <field
-                    name="secret"
-                    type="text"
-                    label="Geheimer Schlüssel"
-                    description="Wird zur Validierung des Tokens verwendet. Niemals öffentlich weitergeben." />
-		<field
-                    name="secret_praefix"
-                    type="text"
-                    label="Geheimer Präfix"
-                    description="Wird zur Erstellung des Feldes genutzt. 5-6 Zeichen" />		
-				<field name="debug" type="radio" label="Debug-Modus" default="0">
-					<option value="0">Nein</option>
-					<option value="1">Ja</option>
-				</field>
-            </fieldset>
-        </fields>
-		
-    </config>
+   <config>
+    <fields name="params">
+        <fieldset name="basic">
+            <field
+                name="secret"
+                type="text"
+                label="Geheimer Schlüssel"
+                description="Wird zur Validierung des Tokens verwendet. Niemals öffentlich weitergeben." />
+            
+            <field
+                name="secret_praefix"
+                type="text"
+                label="Geheimer Präfix"
+                description="Wird zur Erstellung des Feldes genutzt. 5–6 Zeichen" />
+
+            <field
+                name="debug"
+                type="radio"
+                label="Debug-Modus"
+                default="0">
+                <option value="0">Nein</option>
+                <option value="1">Ja</option>
+            </field>
+
+            <field
+                name="auto_insert"
+                type="checkbox"
+                label="Automatisch in alle Formulare einfügen"
+                description="Fügt das Honeypot-Feld automatisch per JavaScript in jedes Formular ein, außer es hat die Klasse 'no-honeypot'."
+                default="1" />
+        </fieldset>
+    </fields>
+</config>
 	
 </extension>

@@ -249,6 +249,25 @@ class Plugin extends CMSPlugin
         exit;
 
     }
+    public function onBeforeCompileHead()
+    {
+        $app = \Joomla\CMS\Factory::getApplication();
+
+        // Nur im Frontend
+        if (!$app->isClient('site')) {
+            return;
+        }
+
+        // Prüfen, ob Auto-Injection aktiviert ist
+        if ((int) $this->params->get('auto_insert', 0) !== 1) {
+            return;
+        }
+
+        $doc = \Joomla\CMS\Factory::getDocument();
+
+        // JavaScript per Datei einbinden (empfohlen)
+        $doc->addScript('/media/plg_baohoneypotar/honeypot-loader.js');
+    }
 
 }
 
