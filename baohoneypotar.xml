@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <media destination="plg_baohoneypotar" folder="media">
         <filename>honeypot-token.php</filename>
     	<filename>index.html</filename>
-	<filename>secret.txt</filename>
     <filename>honeypot-loader.js</filename>
     </media>
 	
