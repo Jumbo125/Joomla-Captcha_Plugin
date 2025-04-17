@@ -113,4 +113,22 @@ class Plugin extends CMSPlugin
         $doc = Factory::getDocument();
         $doc->addScript('/media/plg_baohoneypotar/honeypot-loader.js');
     }
+    public function onAjaxBaohoneypotar()
+    {
+        $secret  = $this->params->get('secret');
+        $praefix = trim($this->params->get('secret_praefix', 'hp'), '_') . '_';
+
+        if (empty($secret)) {
+            echo new \Joomla\CMS\Response\JsonResponse(['error' => 'Secret nicht gesetzt'], 400);
+            return;
+        }
+
+        $field = $praefix . bin2hex(random_bytes(5));
+        $token = hash('sha256', $field . $secret);
+
+        return [
+            'field' => $field,
+            'token' => $token
+        ];
+    }
 }

@@ -5,14 +5,14 @@
     <element>baohoneypotar</element>
     <type>plugin</type>
     <group>system</group>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 	<author>Andreas Rottmann</author>
 <license>MIT</license>
 <copyright>Copyright (C) 2024</copyright>
     <description>
           <![CDATA[Bot-Schutz für forms – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/media/plg_baohoneypotar/honeypot-token.php')
+    fetch('/index.php?option=com_ajax&plugin=baohoneypotar&format=json')
         .then(response => response.json())
         .then(data => {
             if (!data.field || !data.token) return;
@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	   <!-- Mediendateien (werden in /media/plg_baohoneypotar/ kopiert) -->
     <media destination="plg_baohoneypotar" folder="media">
-        <filename>honeypot-token.php</filename>
     	<filename>index.html</filename>
     <filename>honeypot-loader.js</filename>
     </media>
@@ -71,12 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 name="secret"
                 type="text"
                 label="Geheimer Schlüssel"
+                default="changeme123"
                 description="Wird zur Validierung des Tokens verwendet. Niemals öffentlich weitergeben." />
             
             <field
                 name="secret_praefix"
                 type="text"
                 label="Geheimer Präfix"
+                default="pref!" 
                 description="Wird zur Erstellung des Feldes genutzt. 5–6 Zeichen" />
 
             <field
