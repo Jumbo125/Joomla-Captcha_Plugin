@@ -1,55 +1,45 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+// Dieses Script wird per JavaScript geladen und liefert JSON (Feldname + Token)
 
-// Dieses Script wird von außen per JS aufgerufen ? liefert JSON mit Feldname + Token
+define('_JEXEC', 1);
+define('JPATH_BASE', dirname(__DIR__, 2)); // geht 2x zurück vom media-Ordner ins Joomla-Root
 
-// Joomla initialisieren
+require_once JPATH_BASE . '/includes/defines.php';
+require_once JPATH_BASE . '/includes/framework.php';
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 header('Content-Type: application/json');
 
-// Konfig aus Datei lesen (absoluter Pfad)
-$configFile = __DIR__ . '/secret.txt';
+// Plugin-Parameter laden
+$app = Factory::getApplication('site');
+PluginHelper::importPlugin('system', 'baohoneypotar');
+$plugin = $app->getPlugin('system', 'baohoneypotar');
 
-if (!file_exists($configFile)) {
-    echo json_encode(['error' => 'Secret-Datei fehlt']);
+if (!$plugin) {
+    echo json_encode(['error' => 'Plugin nicht geladen']);
     exit;
 }
 
+$params = new Registry($plugin->params);
+$secret  = $params->get('secret', '');
+$praefix = trim($params->get('secret_praefix', 'hp'), '_') . '_';
 
-$configJson = file_get_contents($configFile);
-
-$config = json_decode($configJson);
-
-
-// Fallbacks setzen
-$praefix = $config->praefix ?? 'hp_';
-$secret  = $config->secret ?? '123456';
-
-// Fallback bei fehlendem Secret
-
-if (!$secret) {
-
+if (empty($secret)) {
     echo json_encode(['error' => 'Secret nicht gesetzt']);
-
     exit;
-
 }
 
-
-
-// Feldname + Token generieren
-
+// Feldname und Token erzeugen
 $field = $praefix . bin2hex(random_bytes(5));
-
 $token = hash('sha256', $field . $secret);
 
-
-
-// JSON zurückgeben
-
 echo json_encode([
-
     'field' => $field,
-
     'token' => $token
-
 ]);
-
