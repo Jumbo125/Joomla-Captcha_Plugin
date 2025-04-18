@@ -4,6 +4,7 @@ namespace Joomla\Plugin\System\Baohoneypotar;
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Response\JsonResponse;
 
 \defined('_JEXEC') or die;
 
@@ -13,7 +14,27 @@ class Plugin extends CMSPlugin
     {
         $app = Factory::getApplication();
 
-        if (!$app->isClient('site') || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+        // Nur im Frontend prüfen
+        if (!$app->isClient('site')) {
+            return;
+        }
+
+        // Nur POST-Anfragen prüfen
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return;
+        }
+
+        // Bestimmte AJAX-/System-Requests ausschließen (z. B. YOOtheme, Medien, com_ajax)
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if (
+            str_contains($requestUri, 'yootheme') ||              // PageBuilder
+            str_contains($requestUri, 'option=com_ajax') ||       // Joomla Ajax
+            str_contains($requestUri, 'option=com_media') ||      // Medienverwaltung
+            str_contains($requestUri, 'task=media.') ||           // Task-Aufrufe
+            str_contains($requestUri, 'customizer') ||            // YOOtheme Customizer
+            $app->input->get('format') === 'json' ||              // JSON-Ausgaben
+            str_contains($userAgent, 'YOOtheme')                  // Falls ihr Customizer sich ausweist
+        ) {
             return;
         }
 
@@ -47,11 +68,11 @@ class Plugin extends CMSPlugin
             $this->blockRequest('Bot erkannt – Honeypot-Feld fehlt (JS vermutlich deaktiviert)');
         }
 
-        $honeypotValue = $input->getString($honeypotField, '');
-        $tokenField = $honeypotField . 'token';
-        $token = $input->getString($tokenField, '');
+        $honeypotValue  = $input->getString($honeypotField, '');
+        $tokenField     = $honeypotField . 'token';
+        $token          = $input->getString($tokenField, '');
         $timestampField = $honeypotField . '_token_time';
-        $timestamp = $input->getInt($timestampField, 0);
+        $timestamp      = $input->getInt($timestampField, 0);
 
         $expected = hash('sha256', $honeypotField . $secret);
         $now = time();
@@ -113,14 +134,14 @@ class Plugin extends CMSPlugin
         $doc = Factory::getDocument();
         $doc->addScript('/media/plg_baohoneypotar/honeypot-loader.js');
     }
+
     public function onAjaxBaohoneypotar()
     {
         $secret  = $this->params->get('secret');
         $praefix = trim($this->params->get('secret_praefix', 'hp'), '_') . '_';
 
         if (empty($secret)) {
-            echo new \Joomla\CMS\Response\JsonResponse(['error' => 'Secret nicht gesetzt'], 400);
-            return;
+            return new JsonResponse(['error' => 'Secret nicht gesetzt'], 400);
         }
 
         $field = $praefix . bin2hex(random_bytes(5));
