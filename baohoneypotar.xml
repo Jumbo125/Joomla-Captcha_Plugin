@@ -79,6 +79,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 label="Geheimer Präfix"
                 default="pref!" 
                 description="Wird zur Erstellung des Feldes genutzt. 5–6 Zeichen" />
+            
+            <field
+                name="honeypot_exceptions"
+                type="text"
+                label="Pfad-Ausnahmen (VIPs)"
+                description="Der Honeypot prüft standardmäßig alle POST-Anfragen im Frontend. Wenn bestimmte Systemaufrufe (z. B. YOOtheme, Cookie-Plugins oder AJAX-Komponenten) blockiert werden, kannst du hier Begriffe eintragen, bei deren Vorkommen im Request-Pfad die Prüfung übersprungen wird.
+                Einträge kommasepariert – z. B.: yootheme,com_ajax,gdpr"
+                default="yootheme,com_ajax,gdpr,cookie"
+            />
+            <field
+                name="honeypot_skip_keys"
+                type="text"
+                label="POST-Schlüssel ignorieren"
+                description="Der Honeypot prüft alle POST-Requests – auch unsichtbare Anfragen von Joomla-Plugins, Komponenten oder selbst programmiertem JavaScript (z. B. AJAX). 
+                Wenn der Debug-Modus aktiviert ist, erkennt man im Log, welche POST-Felder betroffen sind. 
+                Trage hier die POST-Schlüssel (durch Komma getrennt) ein, die ignoriert werden sollen. Beispiel: customizer,csrf_token"
+                default="customizer"
+            />
 
             <field
                 name="debug"
