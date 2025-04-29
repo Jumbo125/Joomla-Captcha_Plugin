@@ -123,7 +123,7 @@ class Plugin extends CMSPlugin
 
 
         $honeypotValue = $input->getString($honeypotField, '');
-        echo "andi " . $honeypotValue;
+     
         $tokenField = $honeypotField . 'token';
         $token = $input->getString($tokenField, '');
 
