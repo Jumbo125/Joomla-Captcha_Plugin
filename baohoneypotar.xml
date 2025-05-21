@@ -3,12 +3,14 @@
     <namespace path="src">Joomla\Plugin\System\Baohoneypotar</namespace>
     <name>PLG_SYSTEM_BAOHONEYPOTAR</name>
     <element>baohoneypotar</element>
-    <type>plugin</type>
-    <group>system</group>
-    <version>3.0.0</version>
 	<author>Andreas Rottmann</author>
-<license>MIT</license>
-<copyright>Copyright (C) 2024</copyright>
+    <creationDate></creationDate>
+    <authorEmail></authorEmail>
+    <authorUrl></authorUrl>
+    <services> </services>
+    <version>3.0.0</version>
+    <license>GPL</license>
+    <copyright>Copyright (C) 2025</copyright>
     <description>
           <![CDATA[Bot-Schutz für forms – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
 document.addEventListener('DOMContentLoaded', function () {
@@ -48,73 +50,74 @@ document.addEventListener('DOMContentLoaded', function () {
 &lt;/script&gt;</pre>]]>
     </description>
     <files>
-        <filename plugin="baohoneypotar">baohoneypotar.php</filename>
+        <folder plugin="baohoneypotar">services</folder>
         <folder>src</folder>
-	<folder plugin="baohoneypotar">services</folder>
-	<filename>index.html</filename>
-   	<filename>src/index.html</filename>
-    	<filename>services/index.html</filename>
+         <folder>language</folder>
     </files>
 	
-	   <!-- Mediendateien (werden in /media/plg_baohoneypotar/ kopiert) -->
     <media destination="plg_baohoneypotar" folder="media">
     	<filename>index.html</filename>
-    <filename>honeypot-loader.js</filename>
+        <folder>js</filename>
     </media>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/plg_system_baohoneypotar.sys.ini</language>
+        <language tag="de-DE">de-DE/plg_system_baohoneypotar.sys.ini</language>
+    </languages>
 	
-	 <!-- Backend-Konfiguration -->
-   <config>
+	<!-- Backend-Konfiguration -->
+<config>
     <fields name="params">
         <fieldset name="basic">
             <field
                 name="secret"
                 type="text"
-                label="Geheimer Schlüssel"
-                default="changeme123"
-                description="Wird zur Validierung des Tokens verwendet. Niemals öffentlich weitergeben." />
-            
+                label="PLG_SYSTEM_HONEYPOT_SECRET_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_SECRET_DESC"
+                default="changeme123" />
+
             <field
                 name="secret_praefix"
                 type="text"
-                label="Geheimer Präfix"
-                default="pref!" 
-                description="Wird zur Erstellung des Feldes genutzt. 5–6 Zeichen" />
-            
+                label="PLG_SYSTEM_HONEYPOT_SECRET_PREFIX_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_SECRET_PREFIX_DESC"
+                default="pref!" />
+
             <field
                 name="honeypot_exceptions"
                 type="text"
-                label="Pfad-Ausnahmen (VIPs)"
-                description="Der Honeypot prüft standardmäßig alle POST-Anfragen im Frontend. Wenn bestimmte Systemaufrufe (z. B. YOOtheme, Cookie-Plugins oder AJAX-Komponenten) blockiert werden, kannst du hier Begriffe eintragen, bei deren Vorkommen im Request-Pfad die Prüfung übersprungen wird.
-                Einträge kommasepariert – z. B.: yootheme,com_ajax,gdpr"
-                default="yootheme,com_ajax,gdpr,cookie"
-            />
+                label="PLG_SYSTEM_HONEYPOT_EXCEPTIONS_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_EXCEPTIONS_DESC"
+                default="yootheme,com_ajax,gdpr,cookie" />
+
             <field
                 name="honeypot_skip_keys"
                 type="text"
-                label="POST-Schlüssel ignorieren"
-                description="Der Honeypot prüft alle POST-Requests – auch unsichtbare Anfragen von Joomla-Plugins, Komponenten oder selbst programmiertem JavaScript (z. B. AJAX). 
-                Wenn der Debug-Modus aktiviert ist, erkennt man im Log, welche POST-Felder betroffen sind. 
-                Trage hier die POST-Schlüssel (durch Komma getrennt) ein, die ignoriert werden sollen. Beispiel: customizer,csrf_token"
-                default="customizer"
-            />
+                label="PLG_SYSTEM_HONEYPOT_SKIP_KEYS_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_SKIP_KEYS_DESC"
+                default="customizer" />
 
             <field
                 name="debug"
                 type="radio"
-                label="Debug-Modus"
+                label="PLG_SYSTEM_HONEYPOT_DEBUG_LABEL"
                 default="0">
-                <option value="0">Nein</option>
-                <option value="1">Ja</option>
+                <option value="0">PLG_SYSTEM_HONEYPOT_DEBUG_OPTION_NO</option>
+                <option value="1">PLG_SYSTEM_HONEYPOT_DEBUG_OPTION_YES</option>
             </field>
 
             <field
                 name="auto_insert"
                 type="checkbox"
-                label="Automatisch in alle Formulare einfügen"
-                description="Fügt das Honeypot-Feld automatisch per JavaScript in jedes Formular ein, außer es hat die Klasse 'no-honeypot'."
+                label="PLG_SYSTEM_HONEYPOT_AUTO_INSERT_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_AUTO_INSERT_DESC"
                 default="1" />
         </fieldset>
     </fields>
 </config>
-	
+ <updateservers>
+    <server type="extension" name="Baohoneypotar Update Server">
+         https://raw.githubusercontent.com/Jumbo125/pageflip-plugin-joomla/main/update/stpageflip_update.xml
+    </server>
+</updateservers>
 </extension>

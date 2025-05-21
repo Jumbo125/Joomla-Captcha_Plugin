@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "PLG_SYSTEM_BAOHONEYPOTAR",
+  "type": "plugin",
+  "version": "1.0.1",
+  "description": "PLG BAOHONEYPOTAR",
+  "license": "GPL",
+  "assets": [
+    {
+      "name": "honeypot-loader",
+      "type": "script",
+      "uri": "plg_system_baohoneypotar/honeypot-loader.js"
+    }
+  ]
+}
