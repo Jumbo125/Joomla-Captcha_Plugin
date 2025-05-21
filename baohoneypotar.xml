@@ -7,7 +7,9 @@
     <creationDate></creationDate>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
-    <services> </services>
+ <services>
+    <service src="services/provider.php" />
+</services>
     <version>3.0.0</version>
     <license>GPL</license>
     <copyright>Copyright (C) 2025</copyright>
@@ -56,13 +58,14 @@ document.addEventListener('DOMContentLoaded', function () {
     </files>
 	
     <media destination="plg_baohoneypotar" folder="media">
-    	<filename>index.html</filename>
-        <folder>js</filename>
+        <folder>js</folder>
     </media>
 
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_system_baohoneypotar.sys.ini</language>
         <language tag="de-DE">de-DE/plg_system_baohoneypotar.sys.ini</language>
+	<language tag="en-GB">en-GB/plg_system_baohoneypotar.ini</language>
+        <language tag="de-DE">de-DE/plg_system_baohoneypotar.ini</language>
     </languages>
 	
 	<!-- Backend-Konfiguration -->
