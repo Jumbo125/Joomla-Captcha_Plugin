@@ -2,11 +2,10 @@
 <extension type="plugin" group="system" method="upgrade" element="baohoneypotar">
     <namespace path="src">Joomla\Plugin\System\Baohoneypotar</namespace>
     <name>PLG_SYSTEM_BAOHONEYPOTAR</name>
-    <element>baohoneypotar</element>
 	<author>Andreas Rottmann</author>
-    <creationDate></creationDate>
-    <authorEmail></authorEmail>
-    <authorUrl></authorUrl>
+    <creationDate> </creationDate>
+    <authorEmail> </authorEmail>
+    <authorUrl> </authorUrl>
  <services>
     <service src="services/provider.php" />
 </services>

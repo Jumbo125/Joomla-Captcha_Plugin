@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package     Joomla.Plugin
+ * @subpackage  [PLUGIN_NAME]
+ * @author      jumbo125
+ * @copyright   Copyright (C) 2025 jumbo125. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ */
 
 namespace Joomla\Plugin\System\Baohoneypotar;
 
@@ -41,10 +49,17 @@ class Plugin extends CMSPlugin
         $skipKeysString = $this->params->get('honeypot_skip_keys', '');
         $skipKeys = array_map('trim', explode(',', $skipKeysString));
 
-        foreach ($_POST as $key => $value) {
+        $input = Factory::getApplication()->input;
+        $postData = $input->post->getArray();
+
+        foreach ($postData as $key => $value) {
             if (in_array($key, $skipKeys, true)) {
                 if ((int) $this->params->get('debug', 0)) {
-                    file_put_contents(JPATH_SITE . '/honeypot-debug.txt', sprintf(Text::_('PLG_SYSTEM_BAOHONEYPOTAR_SKIP_POST_KEY'), $key) . "\n", FILE_APPEND);
+                    file_put_contents(
+                        JPATH_SITE . '/honeypot-debug.txt',
+                        sprintf(Text::_('PLG_SYSTEM_BAOHONEYPOTAR_SKIP_POST_KEY'), $key) . "\n",
+                        FILE_APPEND
+                    );
                 }
                 return;
             }
@@ -127,7 +142,8 @@ class Plugin extends CMSPlugin
             $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
             
             $logParts = [];
-            $postArray = $_POST;
+            $postArray = Factory::getApplication()->input->post->getArray();
+
             foreach ($postArray as $key => $value) {
                 $logParts[] = $key . ' -> ' . (is_array($value) ? '[array]' : $value);
             }
