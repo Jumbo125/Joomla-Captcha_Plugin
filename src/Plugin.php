@@ -24,6 +24,7 @@ class Plugin extends CMSPlugin
     public function onAfterInitialise(): void
     {
         $app = Factory::getApplication();
+        Factory::getLanguage()->load('plg_system_baohoneypotar', JPATH_PLUGINS . '/system/baohoneypotar', null, true);
 
         if (!$app->isClient('site')) {
             return;

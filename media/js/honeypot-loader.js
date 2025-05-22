@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (DEBUG) console.log('[Honeypot] Initialisierung läuft...');
 
-    fetch('/index.php?option=com_ajax&plugin=baohoneypotar&format=json')
+   fetch(Joomla.getOptions('system.paths').base + '/index.php?option=com_ajax&plugin=baohoneypotar&format=json')
         .then(response => {
             if (DEBUG) console.log('[Honeypot] Response erhalten:', response);
             return response.json();
