@@ -13,7 +13,7 @@
     <license>GPL</license>
     <copyright>Copyright (C) 2025</copyright>
     <description>
-          <![CDATA[Bot-Schutz für forms – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
+          <![CDATA[Bot-Schutz für Forms (POST). Wenn auto inject deaktiviert ist – bitte diesen Code in ein HTML-Feld einfügen:<pre>&lt;script&gt; 
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/index.php?option=com_ajax&plugin=baohoneypotar&format=json')
         .then(response => response.json())
@@ -58,12 +58,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	
     <media destination="plg_baohoneypotar" folder="media">
         <folder>js</folder>
+         <file>joomla.asset.json</file>
     </media>
 
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_system_baohoneypotar.sys.ini</language>
         <language tag="de-DE">de-DE/plg_system_baohoneypotar.sys.ini</language>
-	<language tag="en-GB">en-GB/plg_system_baohoneypotar.ini</language>
+	    <language tag="en-GB">en-GB/plg_system_baohoneypotar.ini</language>
         <language tag="de-DE">de-DE/plg_system_baohoneypotar.ini</language>
     </languages>
 	

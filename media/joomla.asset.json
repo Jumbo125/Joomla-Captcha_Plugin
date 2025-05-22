@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-  "name": "PLG_SYSTEM_BAOHONEYPOTAR",
+  "name": "plg_system_baohoneypotar",
   "type": "plugin",
   "version": "1.0.1",
   "description": "PLG BAOHONEYPOTAR",
