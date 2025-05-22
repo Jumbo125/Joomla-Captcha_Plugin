@@ -185,10 +185,8 @@ class Plugin extends CMSPlugin
         $token = hash('sha256', $field . $secret);
 
         return new JsonResponse([
-            [
                 'field' => $field,
                 'token' => $token
-            ]
         ]);
     }
 
