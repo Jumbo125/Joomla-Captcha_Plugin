@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
          <folder>language</folder>
     </files>
 	
-    <media destination="plg_baohoneypotar" folder="media">
+    <media destination="plg_system_baohoneypotar" folder="media">
         <folder>js</folder>
          <file>joomla.asset.json</file>
     </media>
