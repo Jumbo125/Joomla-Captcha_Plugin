@@ -165,10 +165,13 @@ class Plugin extends CMSPlugin
         }
 
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->useScript('plg_system_baohoneypotar.honeypot-loader');
+        $wa->getRegistry()->addRegistryFile('media/plg_system_baohoneypotar/joomla.asset.json');
+        $wa->useScript('honeypot-loader');
     }
 
-    public function onAjaxBaohoneypotar()
+ 
+
+    public function onAjaxBaohoneypotar(): JsonResponse
     {
         $secret  = $this->params->get('secret');
         $praefix = trim($this->params->get('secret_praefix', 'hp'), '_') . '_';
@@ -180,9 +183,12 @@ class Plugin extends CMSPlugin
         $field = $praefix . bin2hex(random_bytes(5));
         $token = hash('sha256', $field . $secret);
 
-        return [
-            'field' => $field,
-            'token' => $token
-        ];
+        return new JsonResponse([
+            [
+                'field' => $field,
+                'token' => $token
+            ]
+        ]);
     }
+
 }
