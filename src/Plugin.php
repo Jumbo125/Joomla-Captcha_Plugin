@@ -172,7 +172,7 @@ class Plugin extends CMSPlugin
 
  
 
-    public function onAjaxBaohoneypotar(): JsonResponse
+    public function onAjaxBaohoneypotar()
     {
         $secret  = $this->params->get('secret');
         $praefix = trim($this->params->get('secret_praefix', 'hp'), '_') . '_';
@@ -184,10 +184,10 @@ class Plugin extends CMSPlugin
         $field = $praefix . bin2hex(random_bytes(5));
         $token = hash('sha256', $field . $secret);
 
-        return new JsonResponse([
-                'field' => $field,
-                'token' => $token
-        ]);
+         return [
+            'field' => $field,
+            'token' => $token
+        ];
     }
 
 }
