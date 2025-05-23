@@ -115,6 +115,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 label="PLG_SYSTEM_HONEYPOT_AUTO_INSERT_LABEL"
                 description="PLG_SYSTEM_HONEYPOT_AUTO_INSERT_DESC"
                 default="1" />
+
+            <field
+                name="debug"
+                type="radio"
+                label="PLG_SYSTEM_HONEYPOT_DEBUG_LABEL"
+                description="PLG_SYSTEM_HONEYPOT_DEBUG_DESC"
+                default="0">
+                <option value="0">PLG_SYSTEM_HONEYPOT_DEBUG_OPTION_NO</option>
+                <option value="1">PLG_SYSTEM_HONEYPOT_DEBUG_OPTION_YES</option>
+            </field>
         </fieldset>
     </fields>
 </config>

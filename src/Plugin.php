@@ -168,6 +168,12 @@ class Plugin extends CMSPlugin
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->getRegistry()->addRegistryFile('media/plg_system_baohoneypotar/joomla.asset.json');
         $wa->useScript('honeypot-loader');
+
+          // ➕ Übergib Parameter ins JavaScript
+            $debug = (int) $this->params->get('debug', 0);
+            $app->getDocument()->addScriptOptions('baohoneypotar', [
+                'debug' => $debug
+            ]);
     }
 
  

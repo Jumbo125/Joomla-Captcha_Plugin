@@ -1,6 +1,10 @@
 //automatic inserted by honeypot plugin
 document.addEventListener('DOMContentLoaded', function () {
-    const DEBUG = true; // Setze auf false, um Logging zu deaktivieren
+   const DEBUG = Joomla.getOptions('baohoneypotar')?.debug ?? false;
+
+    if (DEBUG) {
+        console.log('[Honeypot] Debug-Modus aktiviert');
+    }
 
     if (DEBUG) console.log('[Honeypot] Initialisierung läuft...');
 
