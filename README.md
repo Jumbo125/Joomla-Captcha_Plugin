@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/Jumbo125/st-pageflip-enhanced/blob/main/a080723b-e63e-49d4-a9e1-f0487cf1188b.png" alt="st-pageflip-enhanced" width="300">
+</p>
 # 🛡️ BAhoneypotAR – Bot-Schutz für Joomla 4/5
 
 Ein leichtgewichtiges, datenschutzfreundliches Honeypot-Plugin für Joomla 4 und Joomla 5. – schützt zuverlässig vor Bot-Spam ohne Google reCAPTCHA.
