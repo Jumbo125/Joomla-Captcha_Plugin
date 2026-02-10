@@ -105,7 +105,7 @@ class Plugin extends CMSPlugin
         $now = time();
 
         if ($debug) {
-            $log = "🧪 Honeypot Prüfung\n";
+            $log = "Honeypot Prüfung\n";
             $log .= "Feld: $honeypotField\n";
             $log .= "Wert: $honeypotValue\n";
             $log .= "Token: $token\n";
@@ -149,7 +149,7 @@ class Plugin extends CMSPlugin
                 $logParts[] = $key . ' -> ' . (is_array($value) ? '[array]' : $value);
             }
             $postLog = implode(', ', $logParts);
-            file_put_contents(JPATH_SITE . '/honeypot-debug.txt', "🚫 Blockiert: $message - " . $requestUri ." - " . $userAgent . " - " . $postLog . "\n", FILE_APPEND);
+            file_put_contents(JPATH_SITE . '/honeypot-debug.txt', "Blockiert: $message - " . $requestUri ." - " . $userAgent . " - " . $postLog . "\n", FILE_APPEND);
         }
         exit;
     }
@@ -197,3 +197,4 @@ class Plugin extends CMSPlugin
     }
 
 }
+
