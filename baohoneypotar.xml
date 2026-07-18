@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type="text"
                 label="PLG_SYSTEM_HONEYPOT_EXCEPTIONS_LABEL"
                 description="PLG_SYSTEM_HONEYPOT_EXCEPTIONS_DESC"
-                default="yootheme,com_ajax,gdpr,cookie" />
+                default="yootheme,com_ajax,gdpr,cookie,user.logout,user.login" />
 
             <field
                 name="honeypot_skip_keys"
