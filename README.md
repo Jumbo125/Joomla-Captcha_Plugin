@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="https://github.com/Jumbo125/Joomla-Captcha_Plugin/blob/main/icon.png" alt="Joomla-Captcha_Plugin" width="300">
-</p>
 # 🛡️ BAhoneypotAR – Bot-Schutz für Joomla 4/5
 
 Ein leichtgewichtiges, datenschutzfreundliches Honeypot-Plugin für Joomla 4 und Joomla 5. – schützt zuverlässig vor Bot-Spam ohne Google reCAPTCHA.
@@ -107,14 +104,6 @@ Wenn der Debug-Modus im Plugin aktiviert ist (`Debug-Modus = Ja`), erstellt das 
 
 > Nützlich zur Fehlersuche oder zum Testen der Funktionsweise bei Formularübermittlungen.
 
-## Support
-
-Donate with PayPal ☕
-Wenn dir das Projekt hilft und du mir einen Kaffee ausgeben willst:
-
-[![Donate with PayPal ☕](https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white)](https://www.paypal.me/andreasrottmann92)
-
-
 ## 🇬🇧 English
 
 ### 🔍 Description
@@ -207,13 +196,6 @@ If the **debug mode** is enabled in the plugin (`Debug Mode = Yes`), it will gen
 
 - `/honeypot-debug.txt` – contains checks for the **secret**, **token**, and **time factor**
 - `/js-check.txt` – contains additional information about the JavaScript-injected fields
-
-## Support
-
-Donate with PayPal ☕ 
-If this project helps you, feel free to buy me a coffee:
-
-[![Donate with PayPal ☕](https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white)](https://www.paypal.me/andreasrottmann92)
 
 > 🛠️ Useful for troubleshooting or verifying the plugin behavior on form submissions.
 

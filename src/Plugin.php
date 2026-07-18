@@ -37,9 +37,35 @@ class Plugin extends CMSPlugin
         $exceptionString = $this->params->get('honeypot_exceptions', '');
         $exceptions = array_map('trim', explode(',', $exceptionString));
         $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        $queryString = $_SERVER['QUERY_STRING'] ?? '';
+
+        if (empty($requestUri)) {
+            $requestUri = $_SERVER['PHP_SELF'] ?? '';
+        }
+
+        if ($queryString !== '' && !str_contains($requestUri, '?')) {
+            $requestUri .= '?' . $queryString;
+        }
+
+        $input = $app->input;
+        $requestData = array_merge($input->getArray(), $input->post->getArray());
 
         foreach ($exceptions as $ex) {
-            if (!empty($ex) && str_contains($requestUri, $ex)) {
+            if (empty($ex)) {
+                continue;
+            }
+
+            $matched = str_contains($requestUri, $ex);
+            if (!$matched) {
+                foreach ($requestData as $value) {
+                    if (is_string($value) && str_contains($value, $ex)) {
+                        $matched = true;
+                        break;
+                    }
+                }
+            }
+
+            if ($matched) {
                 if ((int) $this->params->get('debug', 0)) {
                     file_put_contents(JPATH_SITE . '/honeypot-debug.txt', sprintf(Text::_('PLG_SYSTEM_BAOHONEYPOTAR_SKIP_EXCEPTION'), $ex, $requestUri) . "\n", FILE_APPEND);
                 }
@@ -105,7 +131,7 @@ class Plugin extends CMSPlugin
         $now = time();
 
         if ($debug) {
-            $log = "Honeypot Prüfung\n";
+            $log = "🧪 Honeypot Prüfung\n";
             $log .= "Feld: $honeypotField\n";
             $log .= "Wert: $honeypotValue\n";
             $log .= "Token: $token\n";
@@ -149,7 +175,7 @@ class Plugin extends CMSPlugin
                 $logParts[] = $key . ' -> ' . (is_array($value) ? '[array]' : $value);
             }
             $postLog = implode(', ', $logParts);
-            file_put_contents(JPATH_SITE . '/honeypot-debug.txt', "Blockiert: $message - " . $requestUri ." - " . $userAgent . " - " . $postLog . "\n", FILE_APPEND);
+            file_put_contents(JPATH_SITE . '/honeypot-debug.txt', "🚫 Blockiert: $message - " . $requestUri ." - " . $userAgent . " - " . $postLog . "\n", FILE_APPEND);
         }
         exit;
     }
@@ -190,11 +216,10 @@ class Plugin extends CMSPlugin
         $field = $praefix . bin2hex(random_bytes(5));
         $token = hash('sha256', $field . $secret);
 
-         return [
+        return new JsonResponse([
             'field' => $field,
             'token' => $token
-        ];
+        ]);
     }
 
 }
-

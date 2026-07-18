@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             console.log(data.data);
-            const item = data.data[0]; // 👈 Ersten Eintrag aus dem Array holen
+            const item = data.data || data; // Joomla liefert das Objekt meist als data
             if (DEBUG) console.log('[Honeypot] Daten empfangen:', item);
 
-            if (!item.field || !item.token) {
+            if (!item?.field || !item?.token) {
                 if (DEBUG) console.warn('[Honeypot] Ungültige Antwort vom Server – Abbruch.');
                 return;
             }
