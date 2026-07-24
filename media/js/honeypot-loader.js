@@ -8,6 +8,32 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('[Honeypot] Initialisierung läuft...');
     }
 
+    const unwrapHoneypotResponse = (value) => {
+        let current = value;
+
+        // Unterstützt unterschiedliche Joomla-/com_ajax-Antwortformen.
+        for (let depth = 0; depth < 5; depth += 1) {
+            if (Array.isArray(current)) {
+                current = current[0];
+                continue;
+            }
+
+            if (
+                current &&
+                typeof current === 'object' &&
+                !current.field &&
+                current.data !== undefined
+            ) {
+                current = current.data;
+                continue;
+            }
+
+            break;
+        }
+
+        return current;
+    };
+
     fetch(`${base}/index.php?option=com_ajax&plugin=baohoneypotar&format=json`)
         .then((response) => {
             if (DEBUG) {
@@ -21,14 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then((data) => {
-            // Unterstützt mehrere Joomla-com_ajax-Antwortformen:
-            // { field, token }
-            // { data: { field, token } }
-            // [{ success: true, data: { field, token } }]
-            // { data: [{ field, token }] }
-            const response = Array.isArray(data) ? data[0] : data;
-            const payload = response?.data ?? response;
-            const item = Array.isArray(payload) ? payload[0] : payload;
+            const item = unwrapHoneypotResponse(data);
 
             if (DEBUG) {
                 console.log('[Honeypot] Rohdaten:', data);
@@ -42,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         data
                     );
                 }
+
                 return;
             }
 
@@ -51,11 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (DEBUG) {
                     console.warn('[Honeypot] Keine passenden Formulare gefunden.');
                 }
+
                 return;
             }
 
             forms.forEach((form) => {
-                // Verhindert doppelte Felder bei erneutem Laden des Scripts.
+                // Keine doppelten Honeypot-Felder einfügen.
                 if (form.querySelector(`[name="${CSS.escape(item.field)}"]`)) {
                     return;
                 }
@@ -71,8 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 honeypot.tabIndex = -1;
                 honeypot.setAttribute('aria-hidden', 'true');
                 honeypot.style.cssText =
-                    'position:absolute!important;left:-10000px!important;' +
-                    'width:1px!important;height:1px!important;overflow:hidden!important;';
+                    'position:absolute!important;' +
+                    'left:-10000px!important;' +
+                    'width:1px!important;' +
+                    'height:1px!important;' +
+                    'overflow:hidden!important;';
                 form.appendChild(honeypot);
 
                 const token = document.createElement('input');
